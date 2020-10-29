@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1051125346350",
+    "firebase_url": "https://mari-iuran-app-2bc52.firebaseio.com",
+    "project_id": "mari-iuran-app-2bc52",
+    "storage_bucket": "mari-iuran-app-2bc52.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1051125346350:android:4fe62493f1fb430013afbf",
+        "android_client_info": {
+          "package_name": "com.example.mari_iuran_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1051125346350-5l936pprpjn3sm4i3n48gtmn0g41re5n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDYokXvNqsmKP1NTNZmL1YQ7ePmicPdmoo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1051125346350-5l936pprpjn3sm4i3n48gtmn0g41re5n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

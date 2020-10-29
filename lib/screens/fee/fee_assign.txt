@@ -1,0 +1,19 @@
+import 'package:flutter/material.dart';
+
+class FeeAssign extends StatefulWidget {
+  final String uid;
+  FeeAssign({this.uid});
+  @override
+  _FeeAssignState createState() => _FeeAssignState();
+}
+
+class _FeeAssignState extends State<FeeAssign> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Column(
+        children: [],
+      ),
+    );
+  }
+}

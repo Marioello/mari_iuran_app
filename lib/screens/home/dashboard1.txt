@@ -1,0 +1,152 @@
+import 'package:flutter/material.dart';
+import 'package:mari_iuran_app/screens/fee/fee_assign.dart';
+import 'package:mari_iuran_app/shared/loading.dart';
+import 'package:provider/provider.dart';
+import 'package:mari_iuran_app/models/notif.dart';
+import 'package:mari_iuran_app/models/user_app.dart';
+
+class Dashboard extends StatelessWidget {
+  String checkDayPeriod() {
+    int hour = DateTime.now().hour;
+    int _res = 21;
+    Map<int, String> dayPeriods = {
+      4: 'Met subuh',
+      6: 'Met pagi',
+      12: 'Met siang',
+      16: 'Met sore',
+      18: 'Met petang',
+      21: 'Met malam',
+    };
+
+    dayPeriods.forEach(
+      (key, value) {
+        if (hour < key && key <= _res) _res = key;
+      },
+    );
+
+    return dayPeriods[_res];
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // final user = Provider.of<UserApp>(context);
+    final userData = Provider.of<UserData>(context) ?? UserData();
+    final notifs = Provider.of<List<Notif>>(context) ?? [];
+    final greet = checkDayPeriod() == null ? 'Hi, ' : checkDayPeriod() + ', ';
+    final greeting =
+        greet + '${userData.name == null ? 'user' : userData.name}!';
+    // final _fList = Provider.of<List<Fee>>(context) ?? [];
+
+    // print(userData.uid);
+    // print(notifs);
+    print(greet);
+    print(greeting);
+
+    return userData == null
+        ? Loading()
+        : SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(20, 30, 20, 30),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    greeting,
+                    style: TextStyle(
+                      color: Colors.brown[500],
+                      fontSize: 25.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(height: 20.0),
+                  Text(
+                    'EMAIL',
+                    style: TextStyle(
+                      color: Colors.grey,
+                      letterSpacing: 2.0,
+                    ),
+                  ),
+                  Text(
+                    userData.email,
+                    style: TextStyle(
+                      color: Colors.brown[500],
+                      fontSize: 23.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(height: 20.0),
+                  Text(
+                    'STATUS PEMBAYARAN',
+                    style: TextStyle(
+                      color: Colors.grey,
+                      letterSpacing: 2.0,
+                    ),
+                  ),
+                  Builder(
+                    builder: (context) {
+                      if (userData.remaining == 0) {
+                        return Text(
+                          '-',
+                          style: TextStyle(
+                            color: Colors.brown[500],
+                            fontSize: 23.0,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        );
+                      } else {
+                        return GestureDetector(
+                          child: Text(
+                            'ada ${userData.remaining} transaksi',
+                            style: TextStyle(
+                              color: Colors.brown[500],
+                              fontSize: 23.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    FeeAssign(uid: userData.uid),
+                              ),
+                            );
+                          },
+                        );
+                      }
+                    },
+                  ),
+                  SizedBox(height: 20.0),
+                  Text(
+                    'RIWAYAT',
+                    style: TextStyle(
+                      color: Colors.grey,
+                      letterSpacing: 2.0,
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.zero,
+                    child: notifs == null
+                        ? Loading()
+                        : ListView.separated(
+                            padding: EdgeInsets.zero,
+                            physics: NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            itemBuilder: (context, index) => ListTile(
+                              visualDensity: VisualDensity(
+                                  horizontal: VisualDensity.minimumDensity,
+                                  vertical: VisualDensity.minimumDensity),
+                              title: Text(notifs[index].text),
+                              subtitle: Text(notifs[index].read.toString()),
+                            ),
+                            separatorBuilder: (context, index) =>
+                                Divider(color: Colors.grey),
+                            itemCount: notifs.length > 4 ? 4 : notifs.length,
+                          ),
+                  )
+                ],
+              ),
+            ),
+          );
+  }
+}

@@ -1,0 +1,45 @@
+import 'package:flutter/material.dart';
+import 'package:mari_iuran_app/models/user_app.dart';
+import 'package:provider/provider.dart';
+// models
+import 'package:mari_iuran_app/models/notif.dart';
+// screens
+import 'package:mari_iuran_app/screens/home/notif_tile.dart';
+
+class NotifList extends StatefulWidget {
+  @override
+  _NotifListState createState() => _NotifListState();
+}
+
+class _NotifListState extends State<NotifList> {
+  @override
+  Widget build(BuildContext context) {
+    // final user = Provider.of<UserApp>(context);
+    final notifs = Provider.of<List<Notif>>(context) ?? [];
+
+    return ListView.builder(
+        itemCount: notifs.length,
+        itemBuilder: (context, index) {
+          return NotifTile(notif: notifs[index]);
+        });
+
+    // return ListView(
+    //   children: [
+    //     NotifTile(notif: notifs[0]),
+    //     NotifTile(notif: notifs[1]),
+    //   ],
+    // );
+
+    // return ListView.separated(
+    //   itemBuilder: (_, index) => ListTile(
+    //     title: Text(notifs[index].text),
+    //     trailing: notifs[index].read == false
+    //         ? Icon(Icons.notifications_active, color: Colors.blue)
+    //         : Icon(Icons.notifications_none),
+    //     onTap: () {},
+    //   ),
+    //   separatorBuilder: (_, __) => Divider(color: Colors.grey),
+    //   itemCount: notifs.length,
+    // );
+  }
+}
